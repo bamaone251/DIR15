@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Fullscreen Video</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fullscreen Video Autoplay</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
+      overflow: hidden;
       background: black;
     }
     video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
     }
   </style>
 </head>
 <body>
+  <video id="bg-video" autoplay playsinline controls preload="auto">
+    <source src="Friday.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
-<video id="myVideo">
-  <source src="Friday.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+  <script>
+    const video = document.getElementById("bg-video");
 
-<script>
-  const video = document.getElementById('myVideo');
-
-  // Try to request fullscreen once video starts playing
-  video.addEventListener('play', () => {
-    if (video.requestFullscreen) {
-      video.requestFullscreen();
-    } else if (video.webkitRequestFullscreen) { /* Safari */
-      video.webkitRequestFullscreen();
-    } else if (video.msRequestFullscreen) { /* IE11 */
-      video.msRequestFullscreen();
-    }
-  });
-
-  // Start playing as soon as possible
-  window.onload = () => {
-    video.play();
-  };
-</script>
-
+    // Attempt to force fullscreen on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      video.play().then(() => {
+        if (video.requestFullscreen) {
+          video.requestFullscreen();
+        } else if (video.webkitRequestFullscreen) {
+          video.webkitRequestFullscreen();
+        } else if (video.msRequestFullscreen) {
+          video.msRequestFullscreen();
+        }
+      }).catch(err => {
+        console.error("Autoplay with sound might be blocked by browser policy:", err);
+      });
+    });
+  </script>
 </body>
 </html>
