@@ -24,28 +24,11 @@
   </style>
 </head>
 <body>
-  <video id="bg-video" autoplay playsinline controls preload="auto">
+  <video>
     <source src="Friday.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
-  <script>
-    const video = document.getElementById("bg-video");
-
-    // Attempt to force fullscreen on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      video.play().then(() => {
-        if (video.requestFullscreen) {
-          video.requestFullscreen();
-        } else if (video.webkitRequestFullscreen) {
-          video.webkitRequestFullscreen();
-        } else if (video.msRequestFullscreen) {
-          video.msRequestFullscreen();
-        }
-      }).catch(err => {
-        console.error("Autoplay with sound might be blocked by browser policy:", err);
-      });
-    });
   </script>
 </body>
 </html>
